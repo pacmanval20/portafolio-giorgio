@@ -1,0 +1,103 @@
+/* Full-width lower sections, with the light kept behind content. */
+.hero{--mouse-x:50%;--mouse-y:50%;--glow-opacity:0;background:radial-gradient(circle 240px at var(--mouse-x) var(--mouse-y),rgb(114 150 255 / var(--glow-opacity)),transparent 75%)}
+.knowledge,.project-section,.contact-section{position:relative;isolation:isolate;overflow:clip;--mouse-x:50%;--mouse-y:50%;--glow-opacity:0}
+.knowledge>.shell,.project-section>.shell,.contact-section>.shell{position:relative;z-index:2}
+.knowledge{background:radial-gradient(ellipse 42% 45% at 9% 43%,#2c3d8a26,transparent 75%),radial-gradient(ellipse 42% 42% at 94% 68%,#185f8933,transparent 70%),linear-gradient(180deg,#091228,#0b1732 62%,#0a1429);border-top:1px solid #6177b851;border-bottom:1px solid #5872b94e}
+.knowledge:before,.project-section:before,.contact-section:after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle 260px at var(--mouse-x) var(--mouse-y),rgb(123 167 255 / var(--glow-opacity)),transparent 78%)}
+.knowledge:after{content:"01";position:absolute;right:4vw;top:23px;color:#91a9e90a;font-size:clamp(13rem,28vw,30rem);font-weight:900;line-height:1;letter-spacing:-.1em;pointer-events:none}
+.knowledge .section-heading{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);column-gap:50px;align-items:end;margin-bottom:48px}
+.knowledge .section-heading .eyebrow,.knowledge .section-heading h2{grid-column:1}
+.knowledge .section-heading .section-intro{grid-column:2;grid-row:2;align-self:end;max-width:340px;padding:0 0 8px 24px;border-left:1px solid #95b5f783}
+.knowledge-grid{counter-reset:skill;gap:18px}
+.knowledge-card{counter-increment:skill;position:relative;isolation:isolate;min-height:325px;padding:29px 27px;background:radial-gradient(circle 180px at var(--card-x,50%) var(--card-y,40%),rgb(90 139 240 / var(--card-light,0)),transparent 80%),linear-gradient(150deg,#1b2a52,#111d3c 67%);border-color:#6078b475;box-shadow:0 18px 42px #0003}
+.knowledge-card:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#83c6ff,#9e9fff,transparent 80%);opacity:.7;transition:opacity .3s}
+.knowledge-card:after{content:"0" counter(skill);position:absolute;right:24px;top:23px;font:700 .75rem Consolas,monospace;letter-spacing:.12em;color:#96acd670}
+.knowledge-card:hover{transform:translateY(-8px);border-color:#9ab6f8;box-shadow:0 27px 60px #0007,0 0 30px #698bf82a}
+.knowledge-card:hover:before{opacity:1}
+.knowledge-card .skill-icon{width:52px;height:52px;background:linear-gradient(145deg,#395ba0,#293a7d);color:#e1ebff;border:1px solid #8ea9ee55;box-shadow:0 9px 25px #090d2d77}
+.knowledge-card h3{font-size:1.4rem;margin-bottom:13px}
+.knowledge-card p{font-size:.95rem;line-height:1.65}
+.knowledge-level{border:1px solid #778fe955;background:#263b76;color:#d1daff}
+.project-section{background:radial-gradient(ellipse 45% 35% at 95% 26%,#4b45ad2b,transparent 80%),radial-gradient(ellipse 40% 30% at 5% 84%,#2173a92b,transparent 75%),linear-gradient(180deg,#0b1631,#0c1530 50%,#091329);border-top:0;border-bottom:1px solid #657dc266}
+.project-section:after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.35;background-image:radial-gradient(1px 1px at 14% 32%,#bac9ff 98%,transparent),radial-gradient(1px 1px at 71% 61%,#b4c9f9 98%,transparent);background-size:260px 270px,370px 310px}
+.project-section .section-heading{margin-bottom:52px}
+.project-section .section-heading h2{font-size:clamp(2.6rem,5vw,4.75rem)}
+.project-list{position:relative;gap:30px}
+.project-list:before{content:"";position:absolute;top:0;bottom:0;left:14px;width:1px;background:linear-gradient(#91afff,transparent);opacity:.4}
+.project-tile{margin-left:0;position:relative;border:1px solid #6278bb8a;border-radius:22px;background:linear-gradient(115deg,#1a2852,#111f41 58%,#122449);box-shadow:0 22px 70px #0006}
+.project-tile.current{border-left:3px solid #9bb7ff}
+.project-tile.next{border-left:3px solid #76c8e8;background:linear-gradient(115deg,#132b4c,#11213f 58%,#172c4c)}
+.project-tile:hover{transform:translateY(-6px);box-shadow:0 30px 80px #0009,0 0 38px #6885df33}
+.project-index{padding:19px 33px;background:#ffffff06;border-bottom-color:#8294ca59;color:#dce5ff}
+.project-content{gap:50px;padding:42px}
+.project-content>div:first-child{position:relative}
+.project-content h3{font-size:clamp(2.5rem,4.4vw,4.6rem);line-height:1.06}
+.project-content p{font-size:1.06rem;line-height:1.7}
+.project-footnote{margin-top:20px;padding-top:17px;border-top:1px solid #9ca9cf46;color:#bdc9e2!important}
+.project-tile.next .project-visual{order:-1}
+.project-visual{min-height:335px;border:1px solid #718ac9a6;border-radius:16px;box-shadow:inset 0 0 60px #ffffff08,0 15px 40px #0005}
+.nubo-visual{background:radial-gradient(circle at 50% 45%,#514fa3,#263b7b 39%,#111d45 73%)}
+.nubo-visual:before{content:"";position:absolute;inset:0;z-index:0;opacity:.7;background-image:radial-gradient(2px 2px at 22% 23%,#e3ebff 98%,transparent),radial-gradient(1.5px 1.5px at 78% 68%,#a9dfff 98%,transparent),radial-gradient(1px 1px at 68% 20%,#d9d1ff 98%,transparent)}
+.nubo-visual strong{font-size:6rem}
+.orbit-one{box-shadow:0 0 24px #9ca4ff22}
+.orbit-two{box-shadow:0 0 36px #76beff20}
+.shop-visual{background:radial-gradient(circle at 50% 43%,#23568a,#152c5d 58%,#0b1e3c)}
+.shop-visual:before{content:"";position:absolute;inset:-30%;background:repeating-linear-gradient(90deg,#a5ccff09 0 1px,transparent 1px 36px),repeating-linear-gradient(#a5ccff09 0 1px,transparent 1px 36px);transform:rotate(-13deg)}
+.mini-shop{width:min(79%,385px);box-shadow:17px 20px 0 #09162b,0 18px 42px #0007}
+.mini-top{padding:15px 18px;font-weight:800}
+.mini-row{padding:15px 18px}
+.mini-row:last-child{background:#3f78a81a}
+.mini-row:last-child b{color:#9dd8ff}
+.contact-section{background:radial-gradient(ellipse 42% 75% at 100% 50%,#4553a647,transparent 75%),linear-gradient(120deg,#182753,#0d1b3c 62%,#101e45);border-top:1px solid #637bc077;border-bottom:1px solid #637bc077}
+.contact-section:before{top:-75%;right:-9%;width:55%;border-color:#aeb9ff46;box-shadow:0 0 0 50px #9ab8ff0a,0 0 0 115px #9ab8ff08,0 0 70px #8fafff22}
+.contact-inner{align-items:center;gap:80px}
+.contact-inner h2{font-size:clamp(3rem,5.4vw,5.2rem);line-height:1.04}
+.contact-inner p:not(.eyebrow){max-width:560px;font-size:1.1rem;line-height:1.75}
+.contact-links{gap:15px}
+.contact-placeholder{position:relative;overflow:hidden;padding:19px 22px;border-color:#8299cb8a;border-radius:13px;background:#ffffff0b;backdrop-filter:blur(8px);transition:transform .25s,border-color .25s,background .25s}
+.contact-placeholder:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(#9faeff,#7dc9ec)}
+.contact-placeholder:hover{transform:translateX(5px);border-color:#a7c0f3;background:#ffffff13}
+.contact-placeholder span{color:#afc7f0}
+.contact-placeholder strong{color:#eef3ff}
+.footer{min-height:105px;border-top:1px solid #6577b448}
+@media(max-width:900px){.knowledge .section-heading{display:block}
+.knowledge .section-heading .section-intro{max-width:620px;padding:0;border:0}
+.knowledge-card{min-height:300px}
+.project-content{gap:30px;padding:30px}
+.project-tile.next .project-visual{order:initial}
+.contact-inner{gap:40px}
+}
+@media(max-width:620px){.knowledge:after{font-size:14rem;right:-30px;top:95px}
+.knowledge .section-heading{margin-bottom:35px}
+.knowledge-grid{gap:16px}
+.knowledge-card{min-height:0;padding:24px}
+.project-section .section-heading h2{font-size:2.65rem}
+.project-section .section-heading{margin-bottom:36px}
+.project-list{gap:19px}
+.project-list:before{display:none}
+.project-tile{border-radius:16px}
+.project-index{padding:14px 19px}
+.project-content{padding:24px 20px;gap:20px}
+.project-content h3{font-size:2.5rem}
+.project-content p{font-size:1rem}
+.project-visual{min-height:240px;border-radius:11px}
+.nubo-visual strong{font-size:4.8rem}
+.mini-shop{width:85%}
+.contact-inner{gap:30px}
+.contact-inner h2{font-size:3.1rem}
+.contact-inner p:not(.eyebrow){font-size:1rem}
+.contact-section:before{right:-55%;top:-35%;width:100%}
+.contact-placeholder{padding:15px 18px}
+.footer{min-height:0}
+}
+@media(hover:none),(pointer:coarse){.hero,.knowledge,.project-section,.contact-section,.knowledge-card{--glow-opacity:0!important;--card-light:0!important}
+.knowledge-card:hover,.project-tile:hover,.contact-placeholder:hover{transform:none}
+}
+@media(prefers-reduced-motion:reduce){.knowledge-card,.project-tile,.contact-placeholder{transition:none}
+}
+@media(max-width:620px){.wave-left{display:none}
+.wave-right{top:540px;right:-460px;opacity:.16}
+}
+@media(max-width:620px){.nav{background:#101b38;border-color:#667bb9}
+.menu-toggle{background:#1d2a50;border-color:#8298d0}
+}

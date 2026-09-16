@@ -1,0 +1,49 @@
+:root{--bg:#050816;--panel:#101b33;--panel2:#172743;--text:#f5f7ff;--muted:#c1c8df;--violet:#9ba8ff;--line:#476097}
+body{background:#050816;color:#f5f7ff}
+.site-header{background:#050816ed;border-color:#6f82c34f}
+.brand-mark,.brand-dot,.eyebrow,.footer a{color:#acb5ff}
+.nav a{color:#c5cbe5}
+.nav a:hover{background:#526bb42b}
+.hero:before{background:radial-gradient(ellipse 23% 42% at 73% 28%,#563baf55,transparent 75%),radial-gradient(ellipse 25% 38% at 63% 50%,#2f73b94a,transparent 80%),radial-gradient(ellipse 42% 45% at 14% 82%,#263b9428,transparent 77%),linear-gradient(115deg,#050816,#081127 65%,#050815)}
+.hero:after{opacity:.9;filter:hue-rotate(-20deg);background-size:145px 140px,230px 200px,300px 250px,370px 290px,440px 370px}
+.wave{filter:hue-rotate(-35deg) saturate(1.25)}
+.wave-left{opacity:.23}
+.wave-right{opacity:.48}
+.hero .eyebrow:before,.status-dot{background:#9fc8ff;box-shadow:0 0 16px #8bafff}
+.hero h1 span{background:linear-gradient(110deg,#e0e8ff,#a9b6ff 45%,#81d9ff);background-clip:text;-webkit-background-clip:text;color:transparent;text-shadow:none}
+.role span{color:#bfc9ef}
+.lead,.section-intro,.knowledge-card p,.project-content p,.contact-inner p:not(.eyebrow){color:#c9d1e5}
+.primary{background:linear-gradient(125deg,#bdd2ff,#95a4f5 58%,#79caee);color:#0d1535;box-shadow:0 12px 35px #8093ed55}
+.secondary{background:#182244;border-color:#8497de;color:#f3f5ff}
+.social-placeholder{background:#18223f;border-color:#6579ad;color:#d2d9ed}
+.portrait-frame{background:radial-gradient(circle at 51% 39%,#5446a4 0,#243566 37%,#0c1836 68%,#071023 100%);border-color:#8094df;box-shadow:17px 19px 0 #1b2449,0 32px 75px #000a,0 0 60px #566fd52b}
+.portrait-frame:before{border-color:#a6baff55;box-shadow:0 0 25px #a5abff22}
+.portrait-frame:after{border-color:#8bd9ff77;box-shadow:0 0 40px #83bfff33}
+.portrait-frame>span{color:#f0f2ff;text-shadow:0 0 45px #a9aeff}
+.knowledge{background:linear-gradient(180deg,#0a1229,#0c1730);border-color:#334d8e}
+.knowledge-card{background:linear-gradient(145deg,#19274c,#101b38 65%);border-color:#465c91}
+.knowledge-card:hover,.project-tile:hover{border-color:#8ea4f2}
+.skill-icon{background:#2a3b7a;color:#c2c9ff}
+.knowledge-level{background:#23326c;color:#c2c9ff}
+.section-heading h2:after{background:linear-gradient(90deg,#8bc9ff,transparent)}
+.project-section{background:linear-gradient(180deg,#101b3a,#0b142b);border-color:#3d5293}
+.project-tile{background:#142144;border-color:#4b5d99}
+.project-index{background:#1b2b56;border-color:#4b5d99;color:#d2d7ff}
+.project-index span{color:#b6bfe6}
+.status{background:#2b438a;border-color:#718cda;color:#eff2ff}
+.status.planned{background:#263766;border-color:#5f74ab}
+.project-visual{background:radial-gradient(circle,#3a4ea2,#1b2a59 55%,#0c1734);border-color:#586cad}
+.nubo-visual strong{color:#ebf0ff;text-shadow:0 0 45px #94a7ff}
+.orbit{border-color:#a0bcff99}
+.shop-visual{background:linear-gradient(140deg,#1e3970,#11203e)}
+.mini-shop{background:#152852;border-color:#7185b4}
+.mini-top{background:#294378}
+.mini-row{border-color:#3d5787}
+.mini-row i{background:#9cb8ff}
+.contact-section{background:radial-gradient(circle at 90% 10%,#4046aa44,transparent 43%),linear-gradient(120deg,#1a2558,#0d1733);border-color:#5968ab}
+.contact-placeholder{border-color:#7282b8;background:#ffffff08}
+.footer{color:#b6c2e1}
+@media(max-width:620px){.hero:before{background:radial-gradient(ellipse 55% 30% at 80% 35%,#3348a544,transparent 80%),#050816}
+.hero:after{opacity:.55}
+.wave-right{opacity:.25}
+}
