@@ -102,25 +102,41 @@
 .menu-toggle{background:#1d2a50;border-color:#8298d0}
 }
 /* Marco de la fotografía */
-.portrait-frame {
-    background: #f4f7fb;
+/* Centra el retrato dentro de su columna */
+.portrait {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Elimina los óvalos decorativos del diseño anterior */
+/* Contenedor circular */
+.portrait-frame {
+    width: min(100%, 390px);
+    height: auto;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #f4f7fb;
+    border: 2px solid #8faaff;
+    box-shadow:
+        14px 18px 0 #1b2449,
+        0 25px 70px rgba(70, 99, 190, 0.35);
+}
+
+/* Elimina los óvalos anteriores */
 .portrait-frame::before,
 .portrait-frame::after {
     display: none;
 }
 
-/* Fotografía */
+/* Ajusta la fotografía al círculo */
 .portrait-photo {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     display: block;
-    object-fit: contain;
-    object-position: center;
-    border-radius: 25px;
-    background: #f4f7fb;
+    object-fit: cover;
+    object-position: center 22%;
+    border-radius: 50%;
 }
