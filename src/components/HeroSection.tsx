@@ -9,6 +9,7 @@ export default function HeroSection() {
       <p className="hero-description">Desarrollador en formación, con una base en <strong>Computación e Informática</strong> y la curiosidad de convertir ideas en soluciones prácticas.</p>
       <div className="actions"><a href="#proyectos" className="button">Explorar mis proyectos <Icon name="arrow" /></a><a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="text-link">Conversemos <Icon name="chat" /></a></div>
       <div className="hero-socials"><span>ENCUÉNTRAME EN</span><a href={profile.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a></div>
+      <div className="live-terminal" aria-hidden="true"><div className="live-terminal-title"><i /><i /><i /><span>giorgio.js — aprendiendo en tiempo real</span></div><pre><code data-live-code>{'// Un paso a la vez.\nconst giorgio = {\n  stack: ["Java", "JavaScript", "Python"],\n  modo: "aprender construyendo"\n};\n\nwhile (curiosidad) {\n  practicar();\n  crear();\n}'}</code></pre></div>
     </div>
     <div className="hero-art"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><span className="art-cross" aria-hidden="true">+</span>
       <div className="portrait-card"><div className="portrait-top"><span className="tiny-dot" /> PERSONA DETRÁS DEL CÓDIGO <span>01</span></div>
