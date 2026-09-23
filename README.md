@@ -1,44 +1,66 @@
-# Portafolio de Giorgio: edición local y publicación en Hostinger
+# Portafolio de Giorgio — edición esmeralda
 
-Este proyecto es una página HTML, CSS y JavaScript. Puedes editarlo sin instalar Bootstrap, React ni otras bibliotecas. La versión local se abre en tu computadora; publicar en Hostinger es un paso separado.
+Sitio personal en Next.js 16, React y TypeScript. Incluye fotografía del repositorio original, Inter alojada localmente, diseño responsive, proyectos con su estado real, FAQ, contacto y WhatsApp al +51 940 756 413.
 
-## Editar en Visual Studio Code
+## Abrir en tu computadora
 
-1. Abre Visual Studio Code y elige **Archivo → Abrir carpeta**. Selecciona la carpeta `portafolio-giorgio-editable`, no solo `index.html`.
-2. En el panel izquierdo, abre `site/index.html` para cambiar tu presentación, conocimientos, proyectos y contactos. Guarda con **Ctrl+S**.
-3. Para cambiar colores y fondos, edita `site/palette.css`. Para cambiar el diseño de las secciones y la luz del mouse, edita `site/finish.css`. `site/site.css` contiene la estructura general.
-4. Si añades una foto, guárdala en `site/images/` y enlázala desde `site/index.html` con una ruta como `images/foto.jpg`. No pongas datos privados que no quieras publicar.
+Instala Node.js 24 y abre una terminal en esta carpeta:
 
-Si no tienes Visual Studio Code, se descarga desde https://code.visualstudio.com/download. También puedes usar otro editor de texto; Visual Studio Code permite trabajar con toda la carpeta y ver los archivos juntos.
-
-## Ver la página mientras editas
-
-Haz doble clic en `Abrir-local.cmd`. Deja abierta la ventana que aparece. En Brave, entra a:
-
-**http://127.0.0.1:4173**
-
-Cuando guardes un cambio, actualiza Brave con **Ctrl+R**. Para detener la vista local, vuelve a la ventana y pulsa **Ctrl+C**. El servidor local escucha solo en tu computadora (`127.0.0.1`) y no recibe cambios ni archivos desde internet.
-
-También puedes abrir la terminal integrada de Visual Studio Code y ejecutar `npm run dev` desde esta carpeta. Necesitas Node.js instalado para la vista local y para preparar el paquete de Hostinger. El proyecto no instala dependencias externas.
-
-## Preparar los archivos para Hostinger
-
-En la terminal de Visual Studio Code, ejecuta `npm run build`. Se crea la carpeta `dist/`. **Solo los archivos dentro de `dist/`** van a `public_html` de tu sitio en Hostinger. No subas `site/`, los scripts de desarrollo, `README.md` ni archivos con contraseñas.
-
-`dist/.htaccess` contiene reglas básicas para limitar de dónde se cargan scripts y estilos y para evitar que el navegador interprete archivos con un tipo incorrecto. El proyecto no tiene formulario, inicio de sesión ni base de datos: por ahora no necesita guardar claves ni datos en el servidor. Configura el dominio y comprueba que HTTPS esté activo en el panel SSL de Hostinger antes de compartir la URL.
-
-Antes de publicar, reemplaza los textos **«enlace pendiente»**, añade tu foto si deseas y revisa que las descripciones de Nubo y la tienda reflejen lo que realmente has construido.
-
-La estructura principal es:
-
-```text
-portafolio-giorgio-editable/
-├─ site/                 archivos que editas
-│  ├─ index.html         contenido de la página
-│  ├─ palette.css        colores del tema espacial
-│  ├─ finish.css         diseño de las secciones y efectos
-│  └─ images/            tus fotos e imágenes
-├─ Abrir-local.cmd       inicia la vista local
-├─ dist/                 resultado de npm run build para Hostinger
-└─ hosting/.htaccess     reglas del servidor para el resultado
+```sh
+npm ci
+npm run dev
 ```
+
+Abre http://localhost:3000. Para revisar la versión de producción:
+
+```sh
+npm run typecheck
+npm run build
+npm run preview
+```
+
+La vista de producción estará en http://localhost:4173. No abras `out/index.html` con doble clic: necesita un servidor HTTP para resolver los recursos.
+
+## Publicar en Vercel
+
+1. Sube el contenido de esta carpeta a un repositorio e impórtalo en Vercel.
+2. El proyecto utiliza Next.js y `vercel.json` ya configura el build y la carpeta `out`.
+3. No definas `NEXT_PUBLIC_BASE_PATH` para Vercel.
+4. Si utilizas dominio propio, define `SITE_URL` con la URL pública final, incluyendo `https://` y sin barra final, y vuelve a desplegar. Si no, se utiliza `VERCEL_PROJECT_PRODUCTION_URL` cuando esté disponible. Revisa el dominio canónico y la tarjeta social después de publicar.
+5. Vercel gestiona HTTPS al publicar en su plataforma. Este paquete no crea una cuenta ni emite un certificado por sí mismo.
+
+## Actualizar tu GitHub Pages actual
+
+El sitio actual está en https://pacmanval20.github.io/portafolio-giorgio/.
+
+1. Conserva una copia o commit de la versión anterior del repositorio.
+2. Coloca los archivos de esta carpeta en la raíz de `pacmanval20/portafolio-giorgio`, incluyendo archivos ocultos y `package-lock.json`. No subas `node_modules`, `.next` ni `out`.
+3. Sustituye el workflow antiguo que copiaba `site/` a `dist/` por `.github/workflows/main.yml`. Debe quedar un solo workflow que publique Pages, para evitar que la versión anterior sobrescriba la nueva. `site/`, `dist/` y los scripts antiguos ya no se usan.
+4. En Settings → Pages, el origen debe ser GitHub Actions.
+5. Guarda los cambios en `main`. El workflow instala dependencias, comprueba TypeScript y construye la versión con `/portafolio-giorgio` como ruta base.
+6. Espera que Actions termine y verifica la web publicada, WhatsApp, fotografía y enlaces. La publicación no se ha ejecutado desde este paquete.
+
+## Dónde editar
+
+- `src/lib/profile.ts`: nombre, correo, número, mensaje exacto de WhatsApp, redes y preguntas frecuentes.
+- `src/components/`: Navbar, HeroSection, ServicesGrid, Projects, AboutUs, FaqAccordion, ContactWhatsapp, Footer y SaveShortcutGuard.
+- `src/app/globals.css`: paleta HSL, estilos, tamaños y adaptación móvil.
+- `src/app/layout.tsx`: metadata, OpenGraph y Twitter Cards.
+- `src/app/page.tsx`: composición de la página y Schema.org JSON-LD.
+- `public/`: retrato WebP, icono y tarjeta de redes sociales de 1200 × 630 px.
+
+## Sobre Ctrl + S y las copias
+
+`SaveShortcutGuard.tsx` intercepta Ctrl + S y Cmd + S mientras la página tiene el foco, y muestra un aviso. Es una medida disuasoria: no impide guardar desde el menú del navegador, descargar recursos, tomar capturas, desactivar JavaScript o copiar una web pública. No bloquea selección, copiar texto ni navegación por teclado.
+
+Los mapas de código fuente de producción están desactivados, pero el HTML, CSS, JavaScript y las imágenes entregadas al navegador siguen siendo públicos. El repositorio público también permite acceder al código. Nunca coloques credenciales o secretos en el frontend. HTTPS protege la conexión, no evita que un visitante copie el contenido.
+
+## Contenido y buscadores
+
+No se inventaron años de experiencia, métricas, clientes, testimonios, certificaciones ni proyectos terminados. El sistema de tienda figura como planificado y Nubo como proyecto en desarrollo.
+
+Se usan `Person`, `ProfilePage` y `FAQPage`, coherentes con un portafolio personal. No se incluyeron `LocalBusiness`, `Organization` ni `Service` porque no hay un negocio local ni servicios comerciales confirmados en el perfil. Estos datos y las etiquetas SEO ayudan a describir el sitio; no garantizan posicionamiento, citas de IA ni resultados enriquecidos.
+
+## Verificación
+
+Consulta `VALIDACION.md` y `AUDITORIA-LIGHTHOUSE.html`. Las mediciones son locales; los resultados públicos dependen del hosting, la red y el dispositivo. Las comprobaciones automáticas no sustituyen una auditoría manual completa de WCAG.
