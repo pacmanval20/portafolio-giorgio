@@ -18,14 +18,28 @@ body{isolation:isolate}.container{width:min(1520px,calc(100% - clamp(40px,9vw,18
 
 /* Terminal fit verified at desktop and mobile widths. */
 
-/* Authored text movement: staggered words and a readable digital name. */
-.glitch-line{display:block;position:relative;width:fit-content}.glitch-name .surname{font-size:.55em;line-height:1.4;margin-top:7px;color:#d5e9df}.glitch-line::before,.glitch-line::after{content:attr(data-text);position:absolute;inset:0;pointer-events:none;opacity:0;color:#7fefb7}.fx-on .glitch-line::before{animation:name-slice 6.8s infinite;clip-path:inset(19% 0 57% 0)}.fx-on .glitch-line::after{animation:name-slice 6.8s .12s infinite reverse;clip-path:inset(61% 0 17% 0);color:#c8ffe4}.fx-on .glitch-line{animation:name-resolve 950ms cubic-bezier(.16,1,.3,1) both}.fx-on .glitch-line:nth-child(2){animation-delay:100ms}.fx-on .glitch-line:nth-child(3){animation-delay:180ms}
-@keyframes name-slice{0%,8%,100%{opacity:0;transform:none}1%,4%{opacity:.8;transform:translateX(5px) skewX(-7deg)}2%,6%{opacity:.65;transform:translateX(-4px) skewX(5deg)}}
-@keyframes name-resolve{from{transform:translateX(-12px) skewX(-9deg);filter:blur(3px);letter-spacing:-.02em}to{transform:none;filter:blur(0)}}
-.word-frame{display:inline-block;overflow:clip;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}.motion-word{display:inline-block}.fx-on .words-enter .motion-word{animation:word-rise .85s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--word-index)*65ms)}
-.project .words-enter .motion-word{animation-name:word-slide}.is-typing code::after{content:'';display:inline-block;width:7px;height:1em;margin-left:3px;vertical-align:-.1em;background:#9cf2be;animation:code-caret 1s steps(2,end) infinite}
-@keyframes word-rise{from{transform:translateY(105%) rotate(3deg)}to{transform:none}}@keyframes word-slide{from{transform:translateX(-24px);filter:blur(3px)}to{transform:none;filter:blur(0)}}@keyframes code-caret{50%{opacity:0}}
+/* Scroll is the timeline: every composition can assemble and reverse. */
+.glitch-line{display:block;position:relative;width:fit-content}
+.glitch-name .surname{font-size:1em;line-height:inherit;margin-top:0;color:var(--light-mint)}
+.glitch-line::before,.glitch-line::after{content:attr(data-text);position:absolute;inset:0;pointer-events:none;opacity:0}
+.fx-on .glitch-line{transform:skewX(-2deg);text-shadow:2px 0 #48b88b66}
+.fx-on .glitch-line::before{opacity:.85;color:#84efbd;clip-path:polygon(0 13%,100% 13%,100% 26%,0 26%,0 58%,100% 58%,100% 68%,0 68%);transform:translateX(5px) skewX(-5deg)}
+.fx-on .glitch-line::after{opacity:.7;color:#d5ffea;clip-path:inset(37% 0 46% 0);transform:translateX(-6px) skewX(7deg)}
+.fx-on.hero-in-view .glitch-line::before{animation:permanent-distortion 2.7s linear infinite alternate}
+.fx-on.hero-in-view .glitch-line::after{animation:permanent-distortion 3.3s linear infinite alternate-reverse}
+@keyframes permanent-distortion{0%,100%{transform:translateX(5px) skewX(-5deg)}25%{transform:translateX(-4px) skewX(4deg)}50%{transform:translateX(8px) skewX(-3deg)}75%{transform:translateX(-6px) skewX(6deg)}}
+.word-frame{display:inline-block;overflow:visible;vertical-align:baseline}.word-frame:not(:last-child){margin-right:.23em}.motion-word{display:inline-block;transform-origin:50% 80%}
+.fx-on .motion-word{animation:none!important;transform:translate3d(0,calc((1 - var(--word-progress,1))*48px),0) scale(calc(.56 + var(--word-progress,1)*.44));opacity:calc(.25 + var(--word-progress,1)*.75);filter:blur(calc((1 - var(--word-progress,1))*2px));transition:none}
+.fx-on .assembly-item{transform:translate3d(calc((1 - var(--assembly,1))*var(--assembly-side,1)*55px),calc((1 - var(--assembly,1))*90px),0) scale(calc(.68 + var(--assembly,1)*.32))!important;opacity:calc(.2 + var(--assembly,1)*.8);transform-origin:50% 60%;transition:none!important;clip-path:none!important}
+.fx-on .nubo-scene.assembly-item{transform:translate3d(calc((1 - var(--assembly,1))*-90px),0,0) scale(calc(.5 + var(--assembly,1)*.5)) rotate(calc((1 - var(--assembly,1))*-12deg))!important;border-radius:calc(14px + (1 - var(--assembly,1))*90px)}
+.fx-on .live-terminal.assembly-item{transform:perspective(1100px) translate3d(0,calc((1 - var(--assembly,1))*65px),0) rotateY(calc((1 - var(--assembly,1))*-22deg)) scale(calc(.7 + var(--assembly,1)*.3))!important}
+.fx-on .journey li.assembly-item{transform:translateX(calc((1 - var(--assembly,1))*110px))!important}
+.binary-meteors{mask-image:none;opacity:1}
+.is-typing code::after{content:'';display:inline-block;width:7px;height:1em;margin-left:3px;vertical-align:-.1em;background:#9cf2be;animation:code-caret 1s steps(2,end) infinite}
+@keyframes code-caret{50%{opacity:0}}
 .fx-off .glitch-line::before,.fx-off .glitch-line::after{display:none}
-@media(max-width:760px){.fx-on .words-enter .motion-word{animation-duration:.65s;animation-delay:calc(var(--word-index)*40ms)}.glitch-name .surname{font-size:.5em}.fx-on .glitch-line::before,.fx-on .glitch-line::after{animation-duration:9s}}
-@media(prefers-reduced-motion:reduce){.glitch-line,.motion-word,.is-typing code::after{animation:none!important;transform:none!important;filter:none!important}.glitch-line::before,.glitch-line::after{display:none}}
-.word-frame:not(:last-child){margin-right:.23em}
+.fx-off .glitch-line{transform:none;text-shadow:none}
+.fx-sleep .glitch-line::before,.fx-sleep .glitch-line::after{animation-play-state:paused!important}
+@media(max-width:760px){.fx-on .assembly-item,.fx-on .nubo-scene.assembly-item,.fx-on .live-terminal.assembly-item,.fx-on .journey li.assembly-item{transform:translate3d(0,calc((1 - var(--assembly,1))*45px),0) scale(calc(.8 + var(--assembly,1)*.2))!important}.fx-on .motion-word{transform:translateY(calc((1 - var(--word-progress,1))*24px)) scale(calc(.7 + var(--word-progress,1)*.3))}.fx-on .glitch-line::before,.fx-on .glitch-line::after{animation-duration:4s}.binary-meteors{opacity:.8}}
+@media(prefers-reduced-motion:reduce){.glitch-line,.motion-word,.assembly-item,.is-typing code::after{animation:none!important;transform:none!important;filter:none!important;opacity:1!important}.glitch-line::before,.glitch-line::after{display:none}}
+.hero h1.glitch-name{clip-path:none!important;line-height:1.04}
