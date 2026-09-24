@@ -17,3 +17,15 @@ body{isolation:isolate}.container{width:min(1520px,calc(100% - clamp(40px,9vw,18
 
 
 /* Terminal fit verified at desktop and mobile widths. */
+
+/* Authored text movement: staggered words and a readable digital name. */
+.glitch-line{display:block;position:relative;width:fit-content}.glitch-name .surname{font-size:.55em;line-height:1.4;margin-top:7px;color:#d5e9df}.glitch-line::before,.glitch-line::after{content:attr(data-text);position:absolute;inset:0;pointer-events:none;opacity:0;color:#7fefb7}.fx-on .glitch-line::before{animation:name-slice 6.8s infinite;clip-path:inset(19% 0 57% 0)}.fx-on .glitch-line::after{animation:name-slice 6.8s .12s infinite reverse;clip-path:inset(61% 0 17% 0);color:#c8ffe4}.fx-on .glitch-line{animation:name-resolve 950ms cubic-bezier(.16,1,.3,1) both}.fx-on .glitch-line:nth-child(2){animation-delay:100ms}.fx-on .glitch-line:nth-child(3){animation-delay:180ms}
+@keyframes name-slice{0%,8%,100%{opacity:0;transform:none}1%,4%{opacity:.8;transform:translateX(5px) skewX(-7deg)}2%,6%{opacity:.65;transform:translateX(-4px) skewX(5deg)}}
+@keyframes name-resolve{from{transform:translateX(-12px) skewX(-9deg);filter:blur(3px);letter-spacing:-.02em}to{transform:none;filter:blur(0)}}
+.word-frame{display:inline-block;overflow:clip;vertical-align:bottom;padding-bottom:.08em;margin-bottom:-.08em}.motion-word{display:inline-block}.fx-on .words-enter .motion-word{animation:word-rise .85s cubic-bezier(.16,1,.3,1) both;animation-delay:calc(var(--word-index)*65ms)}
+.project .words-enter .motion-word{animation-name:word-slide}.is-typing code::after{content:'';display:inline-block;width:7px;height:1em;margin-left:3px;vertical-align:-.1em;background:#9cf2be;animation:code-caret 1s steps(2,end) infinite}
+@keyframes word-rise{from{transform:translateY(105%) rotate(3deg)}to{transform:none}}@keyframes word-slide{from{transform:translateX(-24px);filter:blur(3px)}to{transform:none;filter:blur(0)}}@keyframes code-caret{50%{opacity:0}}
+.fx-off .glitch-line::before,.fx-off .glitch-line::after{display:none}
+@media(max-width:760px){.fx-on .words-enter .motion-word{animation-duration:.65s;animation-delay:calc(var(--word-index)*40ms)}.glitch-name .surname{font-size:.5em}.fx-on .glitch-line::before,.fx-on .glitch-line::after{animation-duration:9s}}
+@media(prefers-reduced-motion:reduce){.glitch-line,.motion-word,.is-typing code::after{animation:none!important;transform:none!important;filter:none!important}.glitch-line::before,.glitch-line::after{display:none}}
+.word-frame:not(:last-child){margin-right:.23em}
