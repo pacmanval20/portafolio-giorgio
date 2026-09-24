@@ -14,8 +14,8 @@ export const metadata: Metadata = {
   authors: [{ name: profile.name }],
   alternates: { canonical: `${siteUrl}/` },
   icons: { icon: asset('icon.svg') },
-  openGraph: { type: 'website', locale: 'es_PE', url: `${siteUrl}/`, siteName: profile.title, title: profile.title, description: profile.description, images: [{ url: `${siteUrl}/og-image.png`, width: 1200, height: 630, alt: profile.title }] },
-  twitter: { card: 'summary_large_image', title: profile.title, description: profile.description, images: [`${siteUrl}/og-image.png`] },
+  openGraph: { type: 'website', locale: 'es_PE', url: `${siteUrl}/`, siteName: profile.title, title: profile.title, description: profile.description, images: [{ url: `${siteUrl}/giorgio.webp`, width: 600, height: 658, alt: profile.title }] },
+  twitter: { card: 'summary_large_image', title: profile.title, description: profile.description, images: [`${siteUrl}/giorgio.webp`] },
   robots: { index: true, follow: true },
 };
 export const viewport: Viewport = { width: 'device-width', initialScale: 1, themeColor: '#0A0D14', colorScheme: 'dark' };
