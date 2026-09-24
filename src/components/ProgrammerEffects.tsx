@@ -48,15 +48,44 @@ export default function ProgrammerEffects() {
     const stage = document.querySelector<HTMLElement>('.tech-stage');
     const stageLabel = document.querySelector<HTMLElement>('[data-stage-label]');
     const contact = document.querySelector<HTMLElement>('.contact');
+    // Stable layout coordinates avoid feedback from our own transforms.
+    const layoutTop = (element: HTMLElement) => {
+      let top = 0, current: HTMLElement | null = element;
+      while (current) { top += current.offsetTop; current = current.offsetParent as HTMLElement | null; }
+      return top;
+    };
+    const assembly = Array.from(document.querySelectorAll<HTMLElement>('.section-heading, .live-terminal, .chapter-word, .tech-chapter > p, .tech-chapter .tags, .nubo-scene, .project-body, .about > div, .journey li, .contact h2, .contact > p, .contact .actions, .faq details'));
+    const words = Array.from(document.querySelectorAll<HTMLElement>('.motion-words'));
+    const wordGroups = words.map(group => ({ group, items: Array.from(group.querySelectorAll<HTMLElement>('.motion-word')) }));
+    const assemblyTops = new Map<HTMLElement, number>();
+    const wordTops = new Map<HTMLElement, number>();
+    const measure = () => {
+      assembly.forEach(item => assemblyTops.set(item, layoutTop(item)));
+      words.forEach(item => wordTops.set(item, layoutTop(item)));
+    };
+    assembly.forEach((item, i) => { item.classList.add('assembly-item'); item.style.setProperty('--assembly-side', i % 2 ? '1' : '-1'); });
     const resize = () => {
-      width = innerWidth; height = innerHeight; dirty = true;
+      width = innerWidth; height = innerHeight; dirty = true; measure();
       if (!canvas.current) return;
       const dpr = Math.min(devicePixelRatio || 1, 1.5);
       canvas.current.width = Math.round(width * dpr); canvas.current.height = Math.round(height * dpr);
       ctx?.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
+    const layoutObserver = new ResizeObserver(() => { measure(); dirty = true; });
+    const main = document.querySelector('main');
+    if (main) layoutObserver.observe(main);
     const updateScenes = () => {
       const h = hero?.getBoundingClientRect();
+      root.classList.toggle('hero-in-view', !!h && h.bottom > 0);
+      assembly.forEach(item => {
+        const top = item.classList.contains('live-terminal') && stage ? stage.getBoundingClientRect().top : (assemblyTops.get(item) || 0) - scrollY;
+        const progress = clamp((height * .96 - top) / (height * .62));
+        item.style.setProperty('--assembly', progress.toFixed(4));
+      });
+      wordGroups.forEach(({group, items}) => {
+        const p = group.closest('.hero') ? 1 : clamp((height * .94 - ((wordTops.get(group) || 0) - scrollY)) / (height * .55));
+        items.forEach((word, i) => word.style.setProperty('--word-progress', clamp(p * 1.32 - Math.min(i, 8) * .04).toFixed(4)));
+      });
       hero?.style.setProperty('--hero-shift', String(h ? clamp(-h.top / height) : 0));
       let nearest = 0, distance = Infinity;
       panels.forEach((panel, i) => {
@@ -86,19 +115,16 @@ export default function ProgrammerEffects() {
       codePanel?.classList.toggle('is-typing', visible);
     }, { threshold: [0, .45], rootMargin: '0px 0px -8% 0px' });
     if (codePanel) observeCode.observe(codePanel);
-    const words = Array.from(document.querySelectorAll<HTMLElement>('.motion-words'));
-    const observeWords = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('words-enter'); observeWords.unobserve(entry.target); } });
-    }, { threshold: .3 });
-    words.forEach(word => observeWords.observe(word));
+
     const spawn = () => {
       const angle = Math.random() * Math.PI * 2;
       const speed = 35 + Math.random() * 85;
-      // Keep the brighter particles in the outer space around the text.
-      meteors.push({ x: Math.random() < .5 ? Math.random() * width * .2 : width * (.8 + Math.random() * .2), y: Math.random() * height,
-        vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed * .65, age: 0, life: 1.8 + Math.random() * 2.4,
-        size: 14 + Math.random() * 13, digit: Math.random() < .5 ? '0' : '1' });
+      // A full-viewport binary field, with short trails and bounded density.
+      meteors.push({ x: Math.random() * width, y: Math.random() * height,
+        vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed * .65, age: 0, life: 4 + Math.random() * 4,
+        size: (mobile.matches ? 22 : 30) + Math.random() * (mobile.matches ? 24 : 42), digit: Math.random() < .5 ? '0' : '1' });
     };
+    const population = () => mobile.matches ? 42 : Math.min(150, Math.max(85, Math.round(width * height / 14000)));
     const draw = (now: number) => {
       raf = requestAnimationFrame(draw);
       if (now - last < 32) return;
@@ -106,13 +132,13 @@ export default function ProgrammerEffects() {
       if (dirty) updateScenes();
       if (ctx) {
         ctx.clearRect(0, 0, width, height);
-        if (elapsed > nextMeteor && meteors.length < (mobile.matches ? 5 : 12)) { spawn(); nextMeteor = elapsed + (mobile.matches ? .85 : .35) + Math.random() * .65; }
+        if (elapsed > nextMeteor && meteors.length < population()) { for (let n = 0; n < 3 && meteors.length < population(); n++) spawn(); nextMeteor = elapsed + .075; }
         for (let i = meteors.length - 1; i >= 0; i--) {
           const m = meteors[i]; m.age += dt;
           const p = m.age / m.life;
           if (p >= 1) { meteors.splice(i, 1); continue; }
           m.x += m.vx * dt; m.y += m.vy * dt;
-          const a = Math.min(p * 6, 1) * (1 - p) * .52;
+          const a = Math.min(p * 6, 1) * (1 - p) * .64;
           const size = m.size * (1 - p * .75);
           ctx.font = size.toFixed(1) + 'px Consolas, monospace';
           for (let tail = 4; tail >= 0; tail--) {
@@ -157,16 +183,16 @@ export default function ProgrammerEffects() {
       cancelAnimationFrame(raf); root.classList.toggle('fx-sleep', document.hidden); hide();
       if (!document.hidden) { last = performance.now(); dirty = true; raf = requestAnimationFrame(draw); }
     };
-    resize(); updateScenes(); raf = requestAnimationFrame(draw);
+    resize(); for (let i = 0; i < population(); i++) { spawn(); meteors[i].age = Math.random() * meteors[i].life * .8; } updateScenes(); raf = requestAnimationFrame(draw);
     window.addEventListener('pointermove', move, { passive: true }); window.addEventListener('scroll', scroll, { passive: true });
     window.addEventListener('resize', resize); window.addEventListener('keydown', key); window.addEventListener('blur', hide);
     document.addEventListener('pointerleave', hide); document.addEventListener('visibilitychange', visibility);
     return () => {
-      cancelAnimationFrame(raf); observeCode.disconnect(); observeWords.disconnect(); words.forEach(word => word.classList.remove('words-enter')); codePanel?.classList.remove('is-typing'); hide();
+      cancelAnimationFrame(raf); observeCode.disconnect(); layoutObserver.disconnect(); assembly.forEach(item => { item.classList.remove('assembly-item'); item.style.removeProperty('--assembly'); item.style.removeProperty('--assembly-side'); }); wordGroups.forEach(({items}) => items.forEach(word => word.style.removeProperty('--word-progress'))); codePanel?.classList.remove('is-typing'); hide();
       window.removeEventListener('pointermove', move); window.removeEventListener('scroll', scroll); window.removeEventListener('resize', resize);
       window.removeEventListener('keydown', key); window.removeEventListener('blur', hide); document.removeEventListener('pointerleave', hide); document.removeEventListener('visibilitychange', visibility);
       ctx?.clearRect(0, 0, width, height); haloCtx?.clearRect(0, 0, 300, 300);
-      root.classList.remove('fx-on', 'fx-sleep'); root.style.removeProperty('--reading-progress');
+      root.classList.remove('fx-on', 'fx-sleep', 'hero-in-view'); root.style.removeProperty('--reading-progress');
       if (code) code.textContent = pythonExample;
       hero?.style.removeProperty('--hero-shift'); contact?.style.removeProperty('--contact-reveal');
       panels.forEach(p => { p.classList.remove('chapter-active'); p.style.removeProperty('--chapter-reveal'); });
@@ -184,3 +210,4 @@ export default function ProgrammerEffects() {
     {ready && <button className="motion-control" aria-pressed={enabled} onClick={toggle} aria-label={enabled ? 'Pausar animaciones' : 'Activar animaciones'}><span aria-hidden="true">{enabled ? 'Ⅱ' : '▷'}</span> {enabled ? 'Pausar animaciones' : 'Activar animaciones'}</button>}
   </>;
 }
+
