@@ -1,21 +1,23 @@
 export const profile = {
   name: 'Giorgio Valentino Taboada Ylave',
-  title: 'Giorgio Valentino Taboada Ylave | Portafolio profesional',
-  description: 'Técnico egresado en Computación e Informática y desarrollador en formación. Conoce mis proyectos con Java, JavaScript, Python e inteligencia artificial.',
+  title: 'Giorgio Taboada | Desarrollador Python · Web e IA',
+  description: 'Portafolio de Giorgio Valentino Taboada Ylave. Enfoque en Python, desarrollo web y aplicaciones con IA. Perfil técnico, proyectos en desarrollo y contacto.',
   email: 'valentinotabylav@gmail.com',
   phone: '+51 940 756 413',
   github: 'https://github.com/pacmanval20',
   linkedin: 'https://www.linkedin.com/in/giorgio-valentino-taboada-ylave-5b8721283/',
   youtube: 'https://www.youtube.com/@pacsito6569',
 };
-export const whatsappUrl = 'https://wa.me/51940756413?text=' + encodeURIComponent('Hola Giorgio Valentino Taboada Ylave | Portafolio profesional, estuve revisando su página web y quiero cotizar sus servicios.');
+export const whatsappUrl = 'https://wa.me/51940756413?text=' + encodeURIComponent('Hola Giorgio, vi tu portafolio y quisiera conversar contigo sobre un proyecto.');
 export const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 export const siteUrl = (process.env.SITE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://pacmanval20.github.io/portafolio-giorgio')).replace(/\/$/, '');
 export const asset = (path: string): string => `${basePath}/${path}`;
+export const pythonExample = "# Ejemplo ilustrativo · procesamiento de datos\nfrom collections import Counter\n\ndef resumir_estados(registros):\n    return Counter(\n        fila[\"estado\"]\n        for fila in registros\n        if fila.get(\"estado\")\n    )";
 export const faqs: ReadonlyArray<{ question: string; answer: string }> = [
-  { question: '¿Qué oportunidades estás buscando?', answer: 'Busco oportunidades de prácticas o puestos iniciales en programación donde pueda aportar, aprender de un equipo y seguir construyendo experiencia con proyectos reales.' },
-  { question: '¿Con qué tecnologías estás trabajando?', answer: 'Estoy aprendiendo Java y desarrollo frontend con HTML, CSS y JavaScript. También exploro Python e inteligencia artificial, y he utilizado Linux con Ubuntu y Omarchy.' },
-  { question: '¿En qué estado están tus proyectos?', answer: 'Este portafolio es mi espacio para presentar mi trabajo. Nubo es mi proyecto de inteligencia artificial en desarrollo. El sistema de ventas e inventario está planificado como práctica con Java; todavía no está construido.' },
-  { question: '¿Cuál es tu experiencia previa?', answer: 'Soy técnico egresado en Computación e Informática. He trabajado en soporte técnico y como auxiliar de logística. Esa experiencia me acerca a las necesidades de los usuarios y a los procesos operativos.' },
-  { question: '¿Cómo podemos conversar sobre una oportunidad?', answer: 'Puedes escribirme al WhatsApp +51 940 756 413 o al correo valentinotabylav@gmail.com. Cuéntame sobre el puesto o el alcance del proyecto para conversar sobre cómo puedo participar.' },
+  { question: '¿Cuál es tu enfoque como desarrollador?', answer: 'Mi dirección profesional es Python, desarrollo web e inteligencia artificial. Actualmente profundizo en Python y preparo proyectos propios. Mi formación es técnica en Computación e Informática; no presento experiencia laboral previa como desarrollador.' },
+  { question: '¿Qué conocimientos tienes y qué estás incorporando?', answer: 'Mi base incluye HTML, CSS y JavaScript, además de formación en Computación e Informática y uso de Linux. Python es mi prioridad actual. Las automatizaciones, integraciones de IA y RAG son líneas de trabajo futuras, sin implementaciones publicadas todavía.' },
+  { question: '¿Puedo ver tus proyectos funcionando?', answer: 'Este portafolio está publicado. Nubo continúa en desarrollo y aún no tiene una demostración pública. El sistema de ventas e inventario con Java está planificado. Publicaré código y demostraciones cuando estén disponibles; las ilustraciones no representan productos terminados.' },
+  { question: '¿Desarrollo con IA y RAG son lo mismo?', answer: 'No. El desarrollo asistido por IA utiliza herramientas de IA para apoyar la creación de una web. Una aplicación con IA incorpora esas funciones en el producto. RAG es una técnica para consultar documentos o información propia antes de generar una respuesta; está entre mis líneas futuras de trabajo.' },
+  { question: '¿Cuál es tu experiencia previa?', answer: 'Soy técnico egresado en Computación e Informática. He trabajado en soporte técnico y como auxiliar de logística, con contacto directo con usuarios y procesos operativos.' },
+  { question: '¿Cómo podemos conversar sobre un proyecto?', answer: 'Escríbeme por WhatsApp al +51 940 756 413 o a valentinotabylav@gmail.com. Cuéntame qué necesitas para conversar sobre el alcance y evaluar cómo puedo participar.' },
 ];
