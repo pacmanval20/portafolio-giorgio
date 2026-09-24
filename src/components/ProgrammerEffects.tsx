@@ -1,9 +1,13 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { pythonExample } from '@/lib/profile';
 
 type Meteor = { x: number; y: number; vx: number; vy: number; age: number; life: number; size: number; digit: string };
 const clamp = (n: number) => Math.max(0, Math.min(1, n));
+
+export function MotionWords({ text }: { text: string }) {
+  return <span className="motion-words">{text.split(' ').map((word, i) => <span className="word-frame" key={i}><span className="motion-word" style={{ '--word-index': i } as CSSProperties}>{word}</span>{' '}</span>)}</span>;
+}
 
 export default function ProgrammerEffects() {
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -35,7 +39,7 @@ export default function ProgrammerEffects() {
     const mobile = matchMedia('(max-width: 760px)');
     let width = innerWidth, height = innerHeight, raf = 0, last = 0, elapsed = 0, nextMeteor = 0;
     let mouseX = -500, mouseY = -500, x = -500, y = -500, showPointer = false;
-    let codeVisible = false, characters = 0, typedAt = 0;
+    let codeVisible = false, characters = 0, typedAt = 0, codeHold = 0;
     let dirty = true;
     const meteors: Meteor[] = [];
     const hero = document.querySelector<HTMLElement>('.hero');
@@ -74,8 +78,19 @@ export default function ProgrammerEffects() {
       root.style.setProperty('--reading-progress', String(total > 0 ? scrollY / total : 0));
       dirty = false;
     };
-    const observeCode = new IntersectionObserver(entries => { codeVisible = entries.some(e => e.isIntersecting); });
-    if (code) { code.textContent = ''; observeCode.observe(code); }
+    const codePanel = code?.closest('pre');
+    const observeCode = new IntersectionObserver(entries => {
+      const visible = entries.some(e => e.isIntersecting && e.intersectionRatio >= .45);
+      if (visible && !codeVisible) { characters = 0; codeHold = 0; typedAt = 0; if (code) code.textContent = ''; }
+      codeVisible = visible;
+      codePanel?.classList.toggle('is-typing', visible);
+    }, { threshold: [0, .45], rootMargin: '0px 0px -8% 0px' });
+    if (codePanel) observeCode.observe(codePanel);
+    const words = Array.from(document.querySelectorAll<HTMLElement>('.motion-words'));
+    const observeWords = new IntersectionObserver(entries => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('words-enter'); observeWords.unobserve(entry.target); } });
+    }, { threshold: .3 });
+    words.forEach(word => observeWords.observe(word));
     const spawn = () => {
       const angle = Math.random() * Math.PI * 2;
       const speed = 35 + Math.random() * 85;
@@ -118,8 +133,14 @@ export default function ProgrammerEffects() {
           haloCtx.fillText((row + col + Math.floor(elapsed * 3)) % 2 ? '1' : '0', 150 + col * 11, 154 + row * 11);
         }
       }
-      if (code && codeVisible && characters < pythonExample.length && now - typedAt > 45) {
-        characters += 2; typedAt = now; code.textContent = pythonExample.slice(0, characters);
+      if (code && codeVisible) {
+        if (characters < pythonExample.length && now - typedAt > 45) {
+          characters += 2; typedAt = now; code.textContent = pythonExample.slice(0, characters);
+          codePanel?.classList.add('is-typing');
+        } else if (characters >= pythonExample.length) {
+          codePanel?.classList.remove('is-typing'); codeHold += dt;
+          if (codeHold > 4) { characters = 0; codeHold = 0; code.textContent = ''; }
+        }
       }
     };
     const hide = () => { showPointer = false; pointer.current?.classList.remove('is-visible'); root.classList.remove('fx-pointer'); };
@@ -141,7 +162,7 @@ export default function ProgrammerEffects() {
     window.addEventListener('resize', resize); window.addEventListener('keydown', key); window.addEventListener('blur', hide);
     document.addEventListener('pointerleave', hide); document.addEventListener('visibilitychange', visibility);
     return () => {
-      cancelAnimationFrame(raf); observeCode.disconnect(); hide();
+      cancelAnimationFrame(raf); observeCode.disconnect(); observeWords.disconnect(); words.forEach(word => word.classList.remove('words-enter')); codePanel?.classList.remove('is-typing'); hide();
       window.removeEventListener('pointermove', move); window.removeEventListener('scroll', scroll); window.removeEventListener('resize', resize);
       window.removeEventListener('keydown', key); window.removeEventListener('blur', hide); document.removeEventListener('pointerleave', hide); document.removeEventListener('visibilitychange', visibility);
       ctx?.clearRect(0, 0, width, height); haloCtx?.clearRect(0, 0, 300, 300);
