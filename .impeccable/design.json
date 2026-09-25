@@ -1,0 +1,23 @@
+{
+  "colors": {
+    "background": "#0A0D14",
+    "text": "#F0F4F3",
+    "muted": "#ABB8B5",
+    "accent": "#72DFB4",
+    "action": "#10B981"
+  },
+  "typography": {
+    "family": "Inter",
+    "displayMax": "96px"
+  },
+  "layout": {
+    "maxWidth": "1520px",
+    "mobileBreakpoint": "760px"
+  },
+  "motion": {
+    "fps": 30,
+    "meteorMaxDesktop": 12,
+    "meteorMaxMobile": 5,
+    "nativeScroll": true
+  }
+}
